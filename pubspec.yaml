@@ -1,6 +1,6 @@
 name: todo_list_example
 description: Un nuevo proyecto Flutter con Clean Architecture y buenas prácticas.
-publish_to: "none" # Evita la publicación accidental en pub.dev
+publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -34,19 +34,5 @@ dev_dependencies:
   json_serializable: ^6.13.0
   riverpod_generator: ^4.0.3
 
-# Configuración específica de Flutter.
 flutter:
   uses-material-design: true
-
-  # Para añadir assets como imágenes, descomenta la siguiente sección:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
-
-  # Para añadir fuentes personalizadas, descomenta la siguiente sección:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
