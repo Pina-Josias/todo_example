@@ -14,7 +14,6 @@ abstract class TodoModel with _$TodoModel {
     required bool isCompleted,
   }) = _TodoModel;
 
-  // 👇 Constructor privado necesario para agregar métodos
   const TodoModel._();
 
   factory TodoModel.fromEntity(Todo todo) {
