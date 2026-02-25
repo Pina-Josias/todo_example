@@ -9,8 +9,6 @@ import 'package:todo_list_example/src/features/todos/data/datasources/todo_local
 final GetIt sl = GetIt.instance;
 
 Future<void> init() async {
-  // Register your dependencies here
-
   // =================================================
   // Features - Products
   // =================================================
