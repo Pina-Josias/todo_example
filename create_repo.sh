@@ -9,8 +9,6 @@ PROJECT_NAME="."
 #  exit 1
 #fi
 
-echo "🚀 Creando la estructura de carpetas y archivos vacíos para: $PROJECT_NAME"
-
 # --- Creación de la estructura de directorios ---
 echo "-> Creando directorios..."
 mkdir -p $PROJECT_NAME/lib/src/core/config
@@ -77,11 +75,3 @@ touch $PROJECT_NAME/lib/src/features/products/presentation/widgets/product_list_
 touch $PROJECT_NAME/test/.gitkeep
 
 echo "-> Archivos vacíos creados con éxito."
-echo ""
-echo "✅ ¡Estructura del proyecto '$PROJECT_NAME' creada con éxito!"
-echo ""
-echo "Próximos pasos:"
-echo "1. cd $PROJECT_NAME"
-echo "2. Abre el proyecto en tu editor de código favorito (VS Code, Android Studio, etc.)."
-echo "3. Comienza a añadir el código en los archivos correspondientes."
-echo ""
