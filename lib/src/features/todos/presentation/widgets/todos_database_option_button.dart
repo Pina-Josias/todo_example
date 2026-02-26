@@ -20,7 +20,7 @@ class TodosDatabaseOptionButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isSelected = ref.watch(
       datasouceTypeProvider.select(
-        (state) => state == DataSourceType.hive,
+        (state) => state == dataSourceType,
       ),
     );
 
