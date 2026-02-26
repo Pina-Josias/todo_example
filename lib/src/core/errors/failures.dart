@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-// Clase base abstracta para todos los fallos.
+// Base class to represent different types of failures in the application.
 abstract class Failure extends Equatable {
   const Failure(this.message);
 
@@ -10,18 +10,18 @@ abstract class Failure extends Equatable {
   List<Object> get props => [message];
 }
 
-// Fallo para errores del servidor (API).
+// Failure for server-related errors.
 class ServerFailure extends Failure {
   const ServerFailure({String message = 'Error del servidor.'})
     : super(message);
 }
 
-// Fallo para errores de caché local.
+// Failure for local cache errors.
 class CacheFailure extends Failure {
   const CacheFailure({String message = 'Error de caché.'}) : super(message);
 }
 
-// Fallo para problemas de conexión de red.
+// Failure for network connection problems.
 class NetworkFailure extends Failure {
   const NetworkFailure({String message = 'Sin conexión a internet.'})
     : super(message);
