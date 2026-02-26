@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:todo_list_example/src/core/usecases/usecase.dart';
@@ -18,38 +17,46 @@ part 'todos_providers.g.dart';
 // * Providers
 
 // * Register Use Cases
-final getTodosProvider = Provider<GetTodos>(
-  (ref) => GetTodos(
+@riverpod
+GetTodos getTodos(Ref ref) {
+  return GetTodos(
     repository: ref.watch(todosRepositoryProvider),
-  ),
-);
+  );
+}
 
-final saveTodosProvider = Provider<SaveTodo>(
-  (ref) => SaveTodo(
+@riverpod
+SaveTodo saveTodos(Ref ref) {
+  return SaveTodo(
     repository: ref.watch(todosRepositoryProvider),
-  ),
-);
+  );
+}
 
-final deleteTodoProvider = Provider<DeleteTodo>(
-  (ref) => DeleteTodo(
+@riverpod
+DeleteTodo deleteTodos(Ref ref) {
+  return DeleteTodo(
     repository: ref.watch(todosRepositoryProvider),
-  ),
-);
+  );
+}
 
-final updateTodoProvider = Provider<UpdateTodo>(
-  (ref) => UpdateTodo(
+@riverpod
+UpdateTodo updateTodos(Ref ref) {
+  return UpdateTodo(
     repository: ref.watch(todosRepositoryProvider),
-  ),
-);
+  );
+}
 
 // * Repository Provider
-final todosRepositoryProvider = Provider<TodoRepository>((ref) {
+@riverpod
+TodoRepository todosRepository(Ref ref) {
   return TodoRepositoryImpl(localDatasource: ref.watch(dataSourceProvider));
-});
+}
 
 // * Data Source Provider
-final dataSourceProvider = Provider<TodoDatasource>((ref) {
-  final dataSourceType = ref.watch(dataSouceType);
+@riverpod
+TodoDatasource dataSource(Ref ref) {
+  final dataSourceType = ref.watch(
+    datasouceTypeProvider,
+  );
 
   switch (dataSourceType) {
     case DataSourceType.flutterSecureStorage:
@@ -57,21 +64,13 @@ final dataSourceProvider = Provider<TodoDatasource>((ref) {
     case DataSourceType.hive:
       return GetIt.instance<TodoLocalHiveDatasourceImpl>();
   }
-});
+}
 
 // * Data Source Type Provider
 enum DataSourceType { flutterSecureStorage, hive }
 
-final dataSouceType = NotifierProvider<DatasouceTypeNotifier, DataSourceType>(
-  DatasouceTypeNotifier.new,
-);
-
-class DatasouceTypeNotifier extends Notifier<DataSourceType> {
-  bool get isHive => state == DataSourceType.hive;
-
-  bool get isFlutterSecureStorage =>
-      state == DataSourceType.flutterSecureStorage;
-
+@riverpod
+class DatasouceTypeNotifier extends _$DatasouceTypeNotifier {
   @override
   DataSourceType build() {
     return DataSourceType.hive;
@@ -109,7 +108,7 @@ class TodosNotifier extends _$TodosNotifier {
   }
 
   Future<void> deleteTodo(String uuid) async {
-    final deleteTodoUseCase = ref.read(deleteTodoProvider);
+    final deleteTodoUseCase = ref.read(deleteTodosProvider);
 
     final result = await deleteTodoUseCase(uuid);
 
@@ -122,7 +121,7 @@ class TodosNotifier extends _$TodosNotifier {
   }
 
   Future<void> updateTodo(Todo updatedTodo) async {
-    final updateTodoUseCase = ref.read(updateTodoProvider);
+    final updateTodoUseCase = ref.read(updateTodosProvider);
 
     final result = await updateTodoUseCase(updatedTodo);
 
@@ -145,13 +144,10 @@ class TodosNotifier extends _$TodosNotifier {
   }
 
   Future<void> updateDataStore(DataSourceType newType) async {
-    final currentType = ref.read(dataSouceType);
+    final currentType = ref.read(datasouceTypeProvider);
 
     if (currentType != newType) {
-      // Update the data source type
-      ref.read(dataSouceType.notifier).state = newType;
-
-      // Refresh the todos to fetch from the new data source
+      ref.read(datasouceTypeProvider.notifier).state = newType;
       await refreshTodos();
     }
   }
